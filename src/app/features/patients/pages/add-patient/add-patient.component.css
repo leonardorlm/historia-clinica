@@ -37,12 +37,6 @@
   color: white;
 }
 
-@media (max-width: 400px) {
-  img {
-    width: 280px !important;
-  }
-}
-
 @media (max-width: 768px) {
   .tooth {
     width: calc(100% / 4 - 10px); /* 4 dientes por fila en tablets */
@@ -52,5 +46,9 @@
 @media (max-width: 480px) {
   .tooth {
     width: calc(100% / 2 - 10px); /* 2 dientes por fila en móviles */
+  }
+
+  img {
+    width: 280px !important;
   }
 }
