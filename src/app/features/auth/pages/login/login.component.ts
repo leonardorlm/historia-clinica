@@ -16,7 +16,7 @@ export class LoginComponent {
 
   login(): void {
     if (this.authService.login(this.username, this.password)) {
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/patients']);
     } else {
       this.errorMessage = 'Usuario o contraseña incorrectos';
     }

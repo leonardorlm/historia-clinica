@@ -27,9 +27,30 @@
   line-height: 30px;
   border-radius: 5px;
   cursor: pointer;
+  width: calc(100% / 8 - 10px); /* 8 dientes por fila en pantallas grandes */
+  max-width: 80px;
+  height: auto;
 }
 
 .tooth.selected {
   background-color: #007bff;
   color: white;
+}
+
+@media (max-width: 400px) {
+  img {
+    width: 280px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .tooth {
+    width: calc(100% / 4 - 10px); /* 4 dientes por fila en tablets */
+  }
+}
+
+@media (max-width: 480px) {
+  .tooth {
+    width: calc(100% / 2 - 10px); /* 2 dientes por fila en móviles */
+  }
 }
