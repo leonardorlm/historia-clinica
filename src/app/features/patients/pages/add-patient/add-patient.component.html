@@ -1,0 +1,781 @@
+<p-card>
+  <form [formGroup]="patientForm" (ngSubmit)="onSubmit()">
+    <div class="grid">
+      <div class="col-12 md:col-4 lg:col-6 xl:col-4">
+        <div>Historia Clínica - Nuevo Paciente</div>
+      </div>
+      <div class="col-12 md:col-4 lg:col-3 xl:col-4">
+        <p-floatLabel>
+          <p-calendar formControlName="date" inputId="birth_date" />
+          <label for="birth_date">FECHA:</label>
+        </p-floatLabel>
+      </div>
+      <div class="col-12 md:col-4 lg:col-3 xl:col-4">
+        <p-floatLabel>
+          <input pInputText id="record" formControlName="record" />
+          <label for="record">EXPEDIENTE:</label>
+        </p-floatLabel>
+      </div>
+    </div>
+    <!-- Datos Personales -->
+
+    <p-fieldset legend="Interrogatorio" [toggleable]="true">
+      <div class="grid">
+        <div class="col-12 md:col-4 lg:col-4 xl:col-3">
+          <p-floatLabel>
+            <input
+              id="name"
+              type="text"
+              pInputText
+              formControlName="name"
+              required
+            />
+            <label for="name">Nombre del paciente:</label>
+          </p-floatLabel>
+        </div>
+        <div class="col-12 md:col-4 lg:col-4 xl:col-3">
+          <p-floatLabel>
+            <p-dropdown
+              formControlName="gender"
+              id="gender"
+              [options]="genderOptions"
+              optionLabel="name"
+            />
+            <label for="gender">Género:</label>
+          </p-floatLabel>
+        </div>
+
+        <div class="col-12 md:col-4 lg:col-4 xl:col-3">
+          <p-floatLabel>
+            <input
+              id="schooling"
+              type="text"
+              pInputText
+              formControlName="schooling"
+              required
+            />
+            <label for="schooling">Escolaridad:</label>
+          </p-floatLabel>
+        </div>
+
+        <div class="col-12 md:col-4 lg:col-4 xl:col-3">
+          <p-floatLabel>
+            <input
+              id="age"
+              type="number"
+              pInputText
+              formControlName="age"
+              required
+            />
+            <label for="age">Edad:</label>
+          </p-floatLabel>
+        </div>
+
+        <div class="col-12 md:col-4 lg:col-4 xl:col-3">
+          <p-floatLabel>
+            <input
+              id="proxy"
+              type="text"
+              pInputText
+              formControlName="proxy"
+              required
+            />
+            <label for="proxy">Nombre del padre o tutor:</label>
+          </p-floatLabel>
+        </div>
+        <div class="col-12 md:col-4 lg:col-4 xl:col-3">
+          <p-floatLabel>
+            <input
+              id="occupation"
+              type="text"
+              pInputText
+              formControlName="occupation"
+              required
+            />
+            <label for="occupation">Ocupación:</label>
+          </p-floatLabel>
+        </div>
+        <div class="col-12 md:col-4 lg:col-4 xl:col-3">
+          <p-floatLabel>
+            <input
+              id="address"
+              type="text"
+              pInputText
+              formControlName="address"
+              required
+            />
+            <label for="address">Dirección:</label>
+          </p-floatLabel>
+        </div>
+        <div class="col-12 md:col-4 lg:col-4 xl:col-3">
+          <p-floatLabel>
+            <input
+              id="phone"
+              type="text"
+              pInputText
+              formControlName="phone"
+              required
+            />
+            <label for="phone">Teléfono:</label>
+          </p-floatLabel>
+        </div>
+      </div>
+      <div class="grid mt-4">
+        <div class="col-12 md:col-4 lg:col-4 xl:col-3">
+          <p-floatLabel>
+            <textarea
+              id="reason"
+              rows="5"
+              cols="30"
+              pInputTextarea
+              formControlName="reason"
+            ></textarea>
+            <label for="reason">Motivo de consulta:</label>
+          </p-floatLabel>
+        </div>
+        <div class="col-12 md:col-4 lg:col-4 xl:col-3">
+          <p-floatLabel>
+            <input
+              id="lastDate"
+              type="text"
+              pInputText
+              formControlName="lastDate"
+              required
+            />
+            <label for="lastDate">Última vez que asistió al dentista:</label>
+          </p-floatLabel>
+        </div>
+        <div class="col-12 md:col-4 lg:col-4 xl:col-3">
+          <p-floatLabel>
+            <input
+              id="reasonInput"
+              type="text"
+              pInputText
+              formControlName="reasonInput"
+              required
+            />
+            <label for="reasonInput">Motivo:</label>
+          </p-floatLabel>
+        </div>
+      </div>
+    </p-fieldset>
+
+    <!-- Antecedentes Patológicos -->
+    <p-fieldset legend="Antecedentes Patológicos" [toggleable]="true">
+      <div class="grid">
+        <div
+          class="col-6 md:col-4 lg:col-4 xl:col-3"
+          *ngFor="let condition of conditions; let i = index"
+        >
+          <p-checkbox
+            [label]="condition.name"
+            [value]="condition.name"
+            (onChange)="toggleCondition(condition.name, $event.checked)"
+            [binary]="true"
+          >
+          </p-checkbox>
+        </div>
+
+        <div class="col-12 md:col-12 lg:col-12 xl:col-12 mt-4">
+          <p-floatLabel>
+            <input
+              id="other"
+              type="text"
+              pInputText
+              formControlName="other"
+              required
+            />
+            <label for="other">Otras:</label>
+          </p-floatLabel>
+        </div>
+      </div>
+      <div class="grid mt-4">
+        <div class="col-12 md:col-6 lg:col-6 xl:col-3">
+          <label for="tm"> ¿Está bajo algún tratamiento médico? </label>
+          <p-checkbox formControlName="chkTM" value="TM" inputId="tm" />
+        </div>
+        <div class="col-12 md:col-6 lg:col-6 xl:col-3">
+          <p-floatLabel>
+            <input
+              id="inputTM"
+              type="text"
+              pInputText
+              formControlName="inputTM"
+              required
+            />
+            <label for="inputTM">¿Cual?</label>
+          </p-floatLabel>
+        </div>
+
+        <div class="col-12 md:col-6 lg:col-6 xl:col-3">
+          <label for="am"> ¿Está tomando algún medicamento? </label>
+          <p-checkbox formControlName="chkAM" value="AM" inputId="am" />
+        </div>
+        <div class="col-12 md:col-6 lg:col-6 xl:col-3">
+          <p-floatLabel>
+            <input
+              id="inputAM"
+              type="text"
+              pInputText
+              formControlName="inputAM"
+              required
+            />
+            <label for="inputAM">¿Cual?</label>
+          </p-floatLabel>
+        </div>
+      </div>
+      <div class="grid mt-4">
+        <div class="col-12 md:col-12 lg:col-4 xl:col-4">
+          <label for="contraceptive">
+            ¿Se encuentra tomando algún anticonceptivo?
+          </label>
+          <p-checkbox
+            formControlName="contraceptive"
+            value="CC"
+            inputId="contraceptive"
+          />
+        </div>
+        <div class="col-12 md:col-12 lg:col-4 xl:col-4">
+          <p-floatLabel>
+            <input
+              id="nameDoctor"
+              type="text"
+              pInputText
+              formControlName="nameDoctor"
+              required
+            />
+            <label for="nameDoctor">Nombre de su médico tratante</label>
+          </p-floatLabel>
+        </div>
+        <div class="col-12 md:col-12 lg:col-4 xl:col-4">
+          <p-floatLabel>
+            <input
+              id="phoneDoctor"
+              type="text"
+              pInputText
+              formControlName="phoneDoctor"
+              required
+            />
+            <label for="phoneDoctor">Tel:</label>
+          </p-floatLabel>
+        </div>
+      </div>
+      <div class="grid mt-4">
+        <div class="col-12 md:col-6 lg:col-4 xl:col-3">
+          <label for="pregnant"> ¿Está embarazada? </label>
+          <p-checkbox
+            formControlName="pregnant"
+            value="pg"
+            inputId="pregnant"
+          />
+        </div>
+        <div class="col-12 md:col-6 lg:col-4 xl:col-3">
+          <p-floatLabel>
+            <input
+              id="timePregnant"
+              type="text"
+              pInputText
+              formControlName="timePregnant"
+              required
+            />
+            <label for="timePregnant">Tiempo:</label>
+          </p-floatLabel>
+        </div>
+      </div>
+    </p-fieldset>
+
+    <!-- Hábitos y Examen Clínico -->
+
+    <p-fieldset legend="Antecedentes No Patológicos" [toggleable]="true">
+      <div class="grid">
+        <div
+          class="col-6 md:col-6 lg:col-6 xl:col-3"
+          *ngFor="let condition of noConditions; let i = index"
+        >
+          <p-checkbox
+            [label]="condition.name"
+            [value]="condition.name"
+            (onChange)="toggleCondition(condition.name, $event.checked)"
+            [binary]="true"
+          >
+          </p-checkbox>
+        </div>
+        <div class="col-12 md:col-6 lg:col-6 xl:col-3">
+          <p-floatLabel>
+            <input
+              id="inputFT"
+              type="text"
+              pInputText
+              formControlName="inputFT"
+              required
+            />
+            <label for="inputFT">Frecuencia tabaquismo:</label>
+          </p-floatLabel>
+        </div>
+        <div class="col-12 md:col-6 lg:col-6 xl:col-3">
+          <p-floatLabel>
+            <input
+              id="inputFA"
+              type="text"
+              pInputText
+              formControlName="inputFA"
+              required
+            />
+            <label for="inputFA">Frecuencia alcoholismo:</label>
+          </p-floatLabel>
+        </div>
+        <div class="col-12 md:col-6 lg:col-6 xl:col-3">
+          <p-floatLabel>
+            <input
+              id="inputFC"
+              type="text"
+              pInputText
+              formControlName="inputFC"
+              required
+            />
+            <label for="inputFC">Frecuencia café:</label>
+          </p-floatLabel>
+        </div>
+        <div class="col-12 md:col-6 lg:col-6 xl:col-3">
+          <p-floatLabel>
+            <input
+              id="inputFG"
+              type="text"
+              pInputText
+              formControlName="inputFG"
+              required
+            />
+            <label for="inputFG">Frecuencia golosinas:</label>
+          </p-floatLabel>
+        </div>
+      </div>
+      <div class="grid mt-4">
+        <div class="col-12 md:col-6 lg:col-6 xl:col-3">
+          <p-floatLabel>
+            <input
+              id="frequency"
+              type="text"
+              pInputText
+              formControlName="frequency"
+              required
+            />
+            <label for="frequency"
+              >¿Con qué frecuencia se cepilla los dientes?:</label
+            >
+          </p-floatLabel>
+        </div>
+        <div class="col-12 md:col-6 lg:col-6 xl:col-3">
+          <p-floatLabel>
+            <input
+              id="auxiliaries"
+              type="text"
+              pInputText
+              formControlName="auxiliaries"
+              required
+            />
+            <label for="auxiliaries"
+              >¿Cuáles auxiliares de higiene bucal utiliza?:</label
+            >
+          </p-floatLabel>
+        </div>
+        <div class="col-12 md:col-6 lg:col-6 xl:col-3">
+          <p-floatLabel>
+            <input
+              id="allergic"
+              type="text"
+              pInputText
+              formControlName="allergic"
+              required
+            />
+            <label for="allergic">Especifique si eres alérgico a algo:</label>
+          </p-floatLabel>
+        </div>
+        <div class="col-12 md:col-6 lg:col-6 xl:col-3">
+          <p-floatLabel>
+            <input
+              id="anesthesia"
+              type="text"
+              pInputText
+              formControlName="anesthesia"
+              required
+            />
+            <label for="anesthesia">¿Le han puesto anestesia antes?</label>
+          </p-floatLabel>
+        </div>
+        <div class="col-12 md:col-6 lg:col-6 xl:col-3">
+          <p-floatLabel>
+            <input
+              id="timeAnesthesia"
+              type="text"
+              pInputText
+              formControlName="timeAnesthesia"
+              required
+            />
+            <label for="timeAnesthesia"
+              >¿Cuánto tiempo tardo la anestesia?</label
+            >
+          </p-floatLabel>
+        </div>
+        <div class="col-12 md:col-6 lg:col-6 xl:col-3">
+          <label for="cv"> ¿Tiene cartilla de vacunación? </label>
+          <p-checkbox formControlName="chkCV" value="cv" inputId="cv" />
+        </div>
+        <div class="col-12 md:col-6 lg:col-6 xl:col-3">
+          <label for="ec"> ¿Tiene el esquema completo? </label>
+          <p-checkbox formControlName="chkEC" value="ec" inputId="ec" />
+        </div>
+        <div class="col-12 md:col-6 lg:col-6 xl:col-3">
+          <p-floatLabel>
+            <input
+              id="inputScheme"
+              type="text"
+              pInputText
+              formControlName="inputScheme"
+              required
+            />
+            <label for="inputScheme">¿Cuál le falta?</label>
+          </p-floatLabel>
+        </div>
+      </div>
+    </p-fieldset>
+
+    <p-fieldset legend="Examen clínico extra oral" [toggleable]="true">
+      <div class="grid">
+        <div class="col-12 md:col-6 lg:col-4 xl:col-4">
+          <p-floatLabel>
+            <input
+              id="head"
+              type="text"
+              pInputText
+              formControlName="head"
+              required
+            />
+            <label for="head">Cabeza:</label>
+          </p-floatLabel>
+        </div>
+        <div class="col-12 md:col-6 lg:col-4 xl:col-4">
+          <p-floatLabel>
+            <input
+              id="face"
+              type="text"
+              pInputText
+              formControlName="face"
+              required
+            />
+            <label for="face">Cara:</label>
+          </p-floatLabel>
+        </div>
+        <div class="col-12 md:col-6 lg:col-4 xl:col-4">
+          <p-floatLabel>
+            <input
+              id="atm"
+              type="text"
+              pInputText
+              formControlName="atm"
+              required
+            />
+            <label for="atm">ATM:</label>
+          </p-floatLabel>
+        </div>
+        <div class="col-12 md:col-6 lg:col-4 xl:col-4">
+          <p-floatLabel>
+            <input
+              id="ganglia"
+              type="text"
+              pInputText
+              formControlName="ganglia"
+              required
+            />
+            <label for="ganglia">Ganglios:</label>
+          </p-floatLabel>
+        </div>
+        <div class="col-12 md:col-6 lg:col-4 xl:col-4">
+          <p-floatLabel>
+            <input
+              id="lips"
+              type="text"
+              pInputText
+              formControlName="lips"
+              required
+            />
+            <label for="lips">Labios:</label>
+          </p-floatLabel>
+        </div>
+        <div class="col-12 md:col-6 lg:col-4 xl:col-4">
+          <p-floatLabel>
+            <input
+              id="particularSigns"
+              type="text"
+              pInputText
+              formControlName="particularSigns"
+              required
+            />
+            <label for="particularSigns">Señas particulares:</label>
+          </p-floatLabel>
+        </div>
+      </div>
+    </p-fieldset>
+
+    <p-fieldset legend="Examen clínico intra oral" [toggleable]="true">
+      <div class="grid">
+        <div class="col-12 md:col-12 lg:col-12 xl:col-6">
+          <div class="dental-chart-container">
+            <div class="dental-chart">
+              <!-- Upper teeth -->
+              <div class="row upper">
+                <span
+                  *ngFor="
+                    let tooth of [
+                      18, 17, 16, 15, 14, 13, 12, 11, 21, 22, 23, 24, 25, 26,
+                      27, 28
+                    ]
+                  "
+                  class="tooth"
+                  [class.selected]="isSelected(tooth)"
+                  (click)="toggleTooth(tooth)"
+                >
+                  {{ tooth }}
+                </span>
+              </div>
+              <!-- Primary teeth -->
+              <div class="row primary">
+                <span
+                  *ngFor="let tooth of [55, 54, 53, 52, 51, 61, 62, 63, 64, 65]"
+                  class="tooth"
+                  [class.selected]="isSelected(tooth)"
+                  (click)="toggleTooth(tooth)"
+                >
+                  {{ tooth }}
+                </span>
+              </div>
+              <div class="row primary">
+                <span
+                  *ngFor="let tooth of [85, 84, 83, 82, 81, 71, 72, 73, 74, 75]"
+                  class="tooth"
+                  [class.selected]="isSelected(tooth)"
+                  (click)="toggleTooth(tooth)"
+                >
+                  {{ tooth }}
+                </span>
+              </div>
+              <!-- Lower teeth -->
+              <div class="row lower">
+                <span
+                  *ngFor="
+                    let tooth of [
+                      48, 47, 46, 45, 44, 43, 42, 41, 31, 32, 33, 34, 35, 36,
+                      37, 38
+                    ]
+                  "
+                  class="tooth"
+                  [class.selected]="isSelected(tooth)"
+                  (click)="toggleTooth(tooth)"
+                >
+                  {{ tooth }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 md:col-12 lg:col-12 xl:col-6 text-center">
+          <img src="assets/images/muelas.png" alt="diente" />
+        </div>
+      </div>
+      <div class="grid mt-4">
+        <div class="col-12 md:col-6 lg:col-4 xl:col-4">
+          <p-floatLabel>
+            <input
+              id="gum"
+              type="text"
+              pInputText
+              formControlName="gum"
+              required
+            />
+            <label for="gum">Encía:</label>
+          </p-floatLabel>
+        </div>
+        <div class="col-12 md:col-6 lg:col-4 xl:col-4">
+          <p-floatLabel>
+            <input
+              id="language"
+              type="text"
+              pInputText
+              formControlName="language"
+              required
+            />
+            <label for="language">Lengua:</label>
+          </p-floatLabel>
+        </div>
+        <div class="col-12 md:col-6 lg:col-4 xl:col-4">
+          <p-floatLabel>
+            <input
+              id="hardPalate"
+              type="text"
+              pInputText
+              formControlName="hardPalate"
+              required
+            />
+            <label for="hardPalate">Paladar duro:</label>
+          </p-floatLabel>
+        </div>
+        <div class="col-12 md:col-6 lg:col-4 xl:col-4">
+          <p-floatLabel>
+            <input
+              id="softPalate"
+              type="text"
+              pInputText
+              formControlName="softPalate"
+              required
+            />
+            <label for="softPalate">Paladar blando:</label>
+          </p-floatLabel>
+        </div>
+        <div class="col-12 md:col-6 lg:col-4 xl:col-4">
+          <p-floatLabel>
+            <input
+              id="pharynx"
+              type="text"
+              pInputText
+              formControlName="pharynx"
+              required
+            />
+            <label for="pharynx">Faringe:</label>
+          </p-floatLabel>
+        </div>
+        <div class="col-12 md:col-6 lg:col-4 xl:col-4">
+          <p-floatLabel>
+            <input
+              id="floorMouth"
+              type="text"
+              pInputText
+              formControlName="floorMouth"
+              required
+            />
+            <label for="floorMouth">Piso de la boca:</label>
+          </p-floatLabel>
+        </div>
+        <div class="col-12 md:col-6 lg:col-4 xl:col-4">
+          <p-floatLabel>
+            <input
+              id="residualRidge"
+              type="text"
+              pInputText
+              formControlName="residualRidge"
+              required
+            />
+            <label for="residualRidge">Reborde residual:</label>
+          </p-floatLabel>
+        </div>
+        <div class="col-12 md:col-6 lg:col-4 xl:col-4">
+          <p-floatLabel>
+            <input
+              id="occlusionType"
+              type="text"
+              pInputText
+              formControlName="occlusionType"
+              required
+            />
+            <label for="occlusionType">Tipo de oclusión:</label>
+          </p-floatLabel>
+        </div>
+      </div>
+      <div class="grid mt-4">
+        <div class="col-12">
+          <h3>PERIODONTO</h3>
+        </div>
+
+        <div class="col-12 md:col-6 lg:col-4 xl:col-4">
+          <p-floatLabel>
+            <input
+              id="gingivitis"
+              type="text"
+              pInputText
+              formControlName="gingivitis"
+              required
+            />
+            <label for="gingivitis">Gingivitis:</label>
+          </p-floatLabel>
+        </div>
+
+        <div class="col-12 md:col-6 lg:col-4 xl:col-4">
+          <p-floatLabel>
+            <input
+              id="periodontitis"
+              type="text"
+              pInputText
+              formControlName="periodontitis"
+              required
+            />
+            <label for="periodontitis">Periodontitis:</label>
+          </p-floatLabel>
+        </div>
+
+        <div class="col-12 md:col-6 lg:col-4 xl:col-4">
+          <p-floatLabel>
+            <input
+              id="gingivalRecession"
+              type="text"
+              pInputText
+              formControlName="gingivalRecession"
+              required
+            />
+            <label for="gingivalRecession">Recesión gingival:</label>
+          </p-floatLabel>
+        </div>
+
+        <div class="col-12 md:col-6 lg:col-4 xl:col-4">
+          <p-floatLabel>
+            <input
+              id="periodontalBalls"
+              type="text"
+              pInputText
+              formControlName="periodontalBalls"
+              required
+            />
+            <label for="periodontalBalls">Bolas periodontales:</label>
+          </p-floatLabel>
+        </div>
+
+        <div class="col-12 md:col-6 lg:col-4 xl:col-4">
+          <p-floatLabel>
+            <input
+              id="mobility"
+              type="text"
+              pInputText
+              formControlName="mobility"
+              required
+            />
+            <label for="mobility">Movilidad:</label>
+          </p-floatLabel>
+        </div>
+
+        <div class="col-12 md:col-6 lg:col-4 xl:col-4">
+          <p-floatLabel>
+            <input
+              id="missingTeeth"
+              type="text"
+              pInputText
+              formControlName="missingTeeth"
+              required
+            />
+            <label for="missingTeeth">Dientes faltantes:</label>
+          </p-floatLabel>
+        </div>
+      </div>
+    </p-fieldset>
+    <!-- Botones -->
+    <!--     <div class="p-grid p-fluid p-mt-3">
+      <div class="p-col-6">
+        <p-button label="Guardar" icon="pi pi-check" type="submit"></p-button>
+      </div>
+      <div class="p-col-6">
+        <p-button
+          label="Cancelar"
+          icon="pi pi-times"
+          class="p-button-secondary"
+          (click)="onCancel()"
+        ></p-button>
+      </div>
+    </div> -->
+  </form>
+</p-card>

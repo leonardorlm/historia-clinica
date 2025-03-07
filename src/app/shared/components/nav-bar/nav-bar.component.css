@@ -1,0 +1,9 @@
+.p-menubar {
+  background: #f8f9fa;
+  border-bottom: 1px solid #ddd;
+}
+
+.p-button-danger {
+  background: #dc3545;
+  border: none;
+}

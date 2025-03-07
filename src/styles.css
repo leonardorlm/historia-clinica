@@ -1,0 +1,10 @@
+/* You can add global styles to this file, and also import other style files */
+.p-inputtext,
+.p-calendar,
+.p-dropdown {
+  width: 100% !important;
+}
+
+.p-fieldset {
+  margin-top: 20px !important;
+}
